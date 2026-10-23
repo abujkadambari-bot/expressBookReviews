@@ -62,5 +62,48 @@ public_users.get('/review/:isbn', function (req, res) {
     }
     return res.status(404).json({ message: "Book not found" });
   });
+  const axios = require('axios');
 
+  const booksApiUrl = 'http://localhost:5000';
+  
+  async function getAllBooks() {
+      try {
+          const response = await axios.get(booksApiUrl + '/');
+          return response.data;
+      } catch (error) {
+          return { error: error.message };
+      }
+  }
+  
+  async function getBookByISBN(isbn) {
+      try {
+          const response = await axios.get(booksApiUrl + '/isbn/' + encodeURIComponent(isbn));
+          return response.data;
+      } catch (error) {
+          return { error: error.message };
+      }
+  }
+  
+  async function getBooksByAuthor(author) {
+      try {
+          const response = await axios.get(booksApiUrl + '/author/' + encodeURIComponent(author));
+          return response.data;
+      } catch (error) {
+          return { error: error.message };
+      }
+  }
+  
+  async function getBooksByTitle(title) {
+      try {
+          const response = await axios.get(booksApiUrl + '/title/' + encodeURIComponent(title));
+          return response.data;
+      } catch (error) {
+          return { error: error.message };
+      }
+  }
+  
+  module.exports.getAllBooks = getAllBooks;
+  module.exports.getBookByISBN = getBookByISBN;
+  module.exports.getBooksByAuthor = getBooksByAuthor;
+  module.exports.getBooksByTitle = getBooksByTitle;
 module.exports.general = public_users;
